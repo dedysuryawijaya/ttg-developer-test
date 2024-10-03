@@ -1,29 +1,37 @@
 import itertools
 import operator
 
-# Angka yang tersedia
-numbers = [1, 4, 5, 6]
+def simbol(operasi):
+    if operasi == 'add':
+        return '+'
+    elif operasi == 'sub':
+        return '-'
+    else:
+        return '*'
 
-# Operator yang tersedia
-ops = [operator.add, operator.sub, operator.mul]
+operasi = [operator.add, operator.sub, operator.mul]
 
-# Fungsi untuk menghitung ekspresi dengan berbagai kombinasi operator
-def calculate(numbers, target):
-    for num_permutation in itertools.permutations(numbers):  # Kombinasi angka
-        for op_combination in itertools.product(ops, repeat=3):  # Kombinasi operator
+def calculate(angka, target):
+    for combin_angka in itertools.permutations(angka): 
+        for combin_operasi in itertools.product(operasi, repeat=3): 
             try:
-                print(op_combination[0])
-                result = op_combination[0](num_permutation[0], num_permutation[1])
-                result = op_combination[1](result, num_permutation[2])
-                result = op_combination[2](result, num_permutation[3])
+                result = combin_operasi[0](combin_angka[0], combin_angka[1])
+                result = combin_operasi[1](result, combin_angka[2])
+                result = combin_operasi[2](result, combin_angka[3])
                 if result == target:
-                    return f"{num_permutation[0]} {op_combination[0].__name__} {num_permutation[1]} {op_combination[1].__name__} {num_permutation[2]} {op_combination[2].__name__} {num_permutation[3]} = {target}"
+                    if combin_operasi[1].__name__ == 'mul':
+                        return f"({combin_angka[0]} {simbol(combin_operasi[0].__name__)} {combin_angka[1]}) {simbol(combin_operasi[1].__name__)} {combin_angka[2]} {simbol(combin_operasi[2].__name__)} {combin_angka[3]} = {target}"
+                    elif combin_operasi[2].__name__ == 'mul':
+                        return f"({combin_angka[0]} {simbol(combin_operasi[0].__name__)} {combin_angka[1]} {simbol(combin_operasi[1].__name__)} {combin_angka[2]}) {simbol(combin_operasi[2].__name__)} {combin_angka[3]} = {target}"
+                    else:
+                        return f"{combin_angka[0]} {simbol(combin_operasi[0].__name__)} {combin_angka[1]} {simbol(combin_operasi[1].__name__)} {combin_angka[2]} {simbol(combin_operasi[2].__name__)} {combin_angka[3]} = {target}"
             except ZeroDivisionError:
-                continue  # Lewati jika terjadi pembagian dengan nol
+                continue 
     return "Tidak ada kombinasi yang cocok."
 
-# Target yang ingin dicapai
-target = 25
 
-# Panggil fungsi untuk menghitung
-print(calculate(numbers, target))
+
+angka = [1, 4, 5, 6]
+target = 49
+
+print(calculate(angka, target))
