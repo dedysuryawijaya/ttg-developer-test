@@ -17,13 +17,18 @@ const register = async (req, res, next) => {
 }
 const allUsers = async (req, res, next) => {
     try {
-        const result = await userService.getAllUsersService()
+        const result = await userService.getAllUsersService(req.body)
         res.status(200).json({
             success: true,
-            data: result
+            data: result,
+            page: req.body.page,
+            perPage: req.body.perPage
         })
     } catch (e) {
-        next(e)
+        res.status(400).json({
+            success: false,
+            data: e.message
+        })
     }
 }
 const getUser = async (req, res, next) => {
@@ -35,7 +40,10 @@ const getUser = async (req, res, next) => {
             data: result
         })
     } catch (e) {
-        next(e)
+        res.status(400).json({
+            success: false,
+            data: e.message
+        })
     }
 }
 
@@ -48,7 +56,10 @@ const deleteUser = async (req, res, next) => {
             data: result
         })
     } catch (e) {
-        next(e)
+        res.status(400).json({
+            success: false,
+            data: e.message
+        })
     }
 }
 

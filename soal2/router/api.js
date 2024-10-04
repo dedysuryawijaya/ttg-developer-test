@@ -6,7 +6,7 @@ import { errorMiddleware } from "../middleware/errorMiddleware.js";
 const api = new express.Router();
 
 api.post('/user/new',bodyParser.json({type: "*/*"}), errorMiddleware, userController.register)
-api.get('/user/all', userController.allUsers)
+api.get('/user/all', bodyParser.json({type: "*/*"}), userController.allUsers)
 api.get('/user/:id', userController.getUser)
 api.delete('/user/:id', userController.deleteUser)
 
