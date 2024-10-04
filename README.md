@@ -18,8 +18,9 @@ Clone project ini
 1. Buat database baru di mysql dengan nama `ttg_test`
 2. Buka terminal di folder Soal 2
 3. Jalankan perintah `npm install`
-4. Jalankan perintha `npx prisma migrate dev`
-5. Jalankan perintah `node app.js`
+4. Buat file .env di dalam folder Soal2 dan copy semua isi .env.example ke .env
+5. Jalankan perintha `npx prisma migrate dev`
+6. Jalankan perintah `node app.js`
 
 ## User API Spec
 
